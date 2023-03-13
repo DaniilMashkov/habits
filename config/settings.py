@@ -118,5 +118,7 @@ SIMPLE_JWT = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = TIME_ZONE
+
 
 TELEBOT_TOKEN = os.getenv('TELEBOT_TOKEN')

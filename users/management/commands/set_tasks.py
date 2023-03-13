@@ -11,6 +11,6 @@ class Command(BaseCommand):
         )
         PeriodicTask.objects.create(
             interval=schedule,
-            name='get_chat_id',
+            name='get chat id',
             task='users.tasks.get_chat_id',
         )
