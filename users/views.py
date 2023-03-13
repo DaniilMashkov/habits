@@ -11,6 +11,7 @@ class UserCreateAPIView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
     def create(self, request, *args, **kwargs):
+        request.data._mutable = True
         request.data.update({'password': make_password(request.data.get('password'))})
         super().create(request, *args, **kwargs)
         return Response({"To continue start a chat with bot https://t.me/Suuupsupbot"},

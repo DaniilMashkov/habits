@@ -19,7 +19,7 @@ class UserTestCase(APITestCase):
     def test_create_user(self):
         response = self.client.post('/users/create/', {'telegram_id': 'Mashkov', "password": "Aa111111"})
 
-        self.assertEqual(response.json(), {'telegram_id': 'Mashkov', "avatar": None, 'first_name': '', 'last_name': ''})
+        self.assertEqual(response.json(), ['To continue start a chat with bot https://t.me/Suuupsupbot'])
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_get_list_users(self):
