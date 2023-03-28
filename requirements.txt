@@ -20,6 +20,7 @@ django-timezone-field==5.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 drf-yasg==1.21.5
+gunicorn==20.1.0
 idna==3.4
 inflection==0.5.1
 iniconfig==2.0.0
@@ -31,6 +32,7 @@ packaging==23.0
 Pillow==9.4.0
 pluggy==1.0.0
 prompt-toolkit==3.0.38
+psycopg2-binary==2.9.3
 PyJWT==2.6.0
 pyTelegramBotAPI==4.10.0
 pytest==7.2.2

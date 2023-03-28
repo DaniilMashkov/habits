@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_DB: "db"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  broker:
+    image: redis:7
+    expose:
+      - 6379
+    healthcheck:
+      test: [ "CMD", "redis-cli","ping" ]
+    command: bash -c "redis-cli & redis-server"
+  worker:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      broker:
+        condition: service_healthy
+      app:
+        condition: service_started
+    links:
+      - broker
+    command: bash -c "celery -A config worker --beat --scheduler django --loglevel=info"
+  app:
+    build: .
+    volumes:
+      - .:/code
+    depends_on:
+      db:
+         condition: service_healthy
+    ports:
+      - "8000:8000"
+    links:
+      - db
+      - broker
+    command: bash -c "python manage.py migrate &
+                      python manage.py set_tasks &
+                      python manage.py collectstatic --noinput &
+                      gunicorn config.wsgi --bind 0.0.0.0:8000 --workers 4 --threads 4"
+  nginx:
+    restart: always
+    image: nginx:1.23-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./static/:/code/static
+    depends_on:
+      app:
+        condition: service_started
+volumes:
+  app:
+  broker:
+    driver: local
+  worker:
+  db:
+    driver: local

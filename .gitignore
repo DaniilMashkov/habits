@@ -12,7 +12,6 @@ static/profile/*.*
 /base/languages/
 static/admin
 */__pycache__/
-venv
 env
 .env
 /media
