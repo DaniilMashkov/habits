@@ -2,10 +2,11 @@
   #### Сервис готов к развертыванию на сервере с помощью docker:
   - Заменить значение servername в файле [docker/nginx/default.conf](https://github.com/DaniilMashkov/habits/blob/main/docker/nginx/default.conf) на собственное 
   - Клонировать репозиторий
+  - Заполнить .env файл
   - Выполнить команду *docker-compose up -d --build*  
   ---
   Локальный запуск возможен в двух вариациях:
-   - Заменить значение servername в файле [docker/nginx/default.conf](https://github.com/DaniilMashkov/habits/blob/main/docker/nginx/default.conf) на _ и выполнить команду *docker-compose up -d --build*; сервис будет доступен по адресу http://localhost/
+   - Заменить значение servername в файле [docker/nginx/default.conf](https://github.com/DaniilMashkov/habits/blob/main/docker/nginx/default.conf) на _, заполнить .env файл и выполнить команду *docker-compose up -d --build*; сервис будет доступен по адресу http://localhost/
    - Создать виртуальное окружение, установить зависимости, заполнить .env файл, создать БД postgres, применить миграции и запустить *python manage.py migrate -> python manage.py runserver* 
 ---
 #### Регистрация и авторизация требуется для всех действий, кроме регистрации нового пользователя. Администратор имеет доступ ко всем пользователям и привычкам, обычный пользователь только к своему аккаунту и привычкам.
